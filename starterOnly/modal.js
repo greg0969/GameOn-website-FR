@@ -21,7 +21,7 @@ function launchModal() {
   modalbg.style.display = "block";
 }
 
-// close modal form
+// close form
 
 function closeModal() {
   modalbg.style.display = "none";
