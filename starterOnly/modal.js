@@ -108,11 +108,11 @@ function validation(form) {
       && lastNameValid 
       && emailValid
       && birthdateValid 
-      && qteTournamentValid
+      && nbTournamentValid
       && locationValid
       && termsValid
     ) {
       document.querySelector(".modal-body").style.display = "none";
-      document.querySelector(".Confirmation").style.display = "unset";
+      document.querySelector(".Confirmation").style.display = "block";
     }
 }
