@@ -12,6 +12,15 @@ const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const formData = document.querySelectorAll(".formData");
 const form = document.getElementsByName('reserve');
+const confirmationMsg = document.getElementsByClassName("Confirmation");
+const firstName = document.getElementById("first");
+const lastName = document.getElementById("last");
+const mail = document.getElementById("email");
+const birthdate = document.getElementById("birthdate");
+const nbTournament = document.getElementById("quantity");
+const locations = document.querySelectorAll(".checkbox-input[type=radio]");
+const checkbox = document.getElementById("checkbox1");
+const confirm = document.getElementById("confirm-modal");
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -27,92 +36,120 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-//keep modal
+// keep modal
 
-form[0].addEventListener('submit', (e) => {
+/*form[0].addEventListener('submit', (e) => {
   e.preventDefault();
-});
+});*/
 
-// Validation
+// error message
 
-function isValid(condition) {
-  if (!condition){
-    return false;
-  }
-  else {
+const errorMessages = {
+  lastError: "Veuillez entrer un nom comportant 2 caractères ou plus.",
+	firstError: "Veuillez entrer un prénom comportant 2 caractères ou plus.",
+	mailError: "Veuillez entrer une adresse email valide.",
+	birthdateError: "Veuillez entrer une date de naissance valide.",
+	nbTournamentError: "Veuillez entrer un nombre valide.",
+	locationError: "Veuillez choisir une ville.",
+	checkboxError: "Veuillez accepter les conditions d'utilisations.",
+};
+
+function isValid() {
+  confirmationMsg.style.display = "block";
+}
+
+function isNotvalid(value, message) {
+	var input ;
+	input = value.parentNode;
+	input.setAttribute("data-error-visible", true);
+	input.setAttribute("data-error", message);
+}
+
+// validation
+
+function firstValidation() {
+	let inputValue = firstName.value;
+	if (inputValue !== null && inputValue.length >= 2) {
     return true;
   }
+	else {
+    return false;
+  }
 }
 
-// show error 
+function lastValidation() {
+	let inputValue = lastName.value;
+	if (inputValue !== null && inputValue.length >= 2) return true;
+	else return false;
+}
 
-function ShowErrorMessage(elemID,message,input){
-  if(elemID && message){
-    document.getElementById(elemID).style.display = "block";
-    document.getElementById(elemID).innerText = message;
-    if(input){
-      input.setAttribute("aria-invalid","true");
+
+function emailValidation() {
+	let mailRegex = /^\S+@\S+\.\S+$/;
+	return mailRegex.test(mail.value);
+}
+
+function birthdateValidation() {
+
+}
+
+function nbTournamentValidation() {
+	let nbRegex = /^[0-9]+$/;
+	return nbRegex.test(nbTournament.value);
+}
+
+function locationValidation() {
+	for (let radio of location) {
+		if (radio.checked === true) {
+      return true;
     }
-  }
-  else throw new Error('erreur');
+	}
+	return false;
 }
 
-//hide error when corrected error
-
-function HideErrorMessage(elemID,input) {
-  if(elemID){
-    document.getElementById(elemID).style.display = "none";
-  }
-  if(input){
-    input.setAttribute("aria-invalid", "false");
+function checkboxValidation() {
+  if (checkbox.checked) {
+    return true
   } 
+	else {
+    return false
+  }
 }
 
-function validation(form) { 
-  let firstNameValid = isValid(form["first"].value) && isValid(form["first"].value.length >= 2);
-  firstNameValid ?
-    hideErrorMessage('first-error', form["first"]) : 
-    ShowErrorMessage('first-error', "Veuillez entrer 2 caractères ou plus pour le champ du prénom.", form["first"]);
-  
-  let lastNameValid = isValid(form["last"].value) && isValid(form["last"].value.length >= 2);
-  lastNameValid ?  
-    hideErrorMessage('last-error', form["last"]) : 
-    ShowErrorMessage('last-error', "Veuillez entrer 2 caractères ou plus pour le champ du nom.", form["last"]); 
-  
-  
-  let emailValid = isValid(form["email"].value) && isValid(/[A-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(form["email"].value));
-  emailValid ? 
-    hideErrorMessage('mail-error', form["email"]) : 
-    ShowErrorMessage('mail-error', "Veuillez entrer une addresse mail valide.", form["email"]);
 
-  let birthdateValid = isValid(form["birthdate"].value) && isValid(/^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(form["birthdate"].value));
-  birthdateValid ? 
-    hideErrorMessage('birthdate-error', form["birthdate"]) : 
-    ShowErrorMessage('birthdate-error', "Veuillez entrer une date de naissance.", form["birthdate"]);
-
-
-  let nbTournamentValid = isValid(form["quantity"].value) && isValid(/^[0-9]+$/.test(form["quantity"].value));
-  nbTournamentValid ? 
-    hideErrorMessage('error-tournament', form["quantity"]) : 
-    ShowErrorMessage('error-tournament', "Veuillez entrer une valeur numérique.", form["quantity"]);
-
-  let locationValid = isValid(form.location.value);
-  locationValid ?  hideErrorMessage('error-location') : ShowErrorMessage('error-location', "Veuillez sélectionner une ville.");
-
-  let termsValid = isValid(form.terms.checked);
-  termsValid ? hideErrorMessage('error-terms') : ShowErrorMessage('error-terms', "Veuillez indiquer que vous acceptez les conditions générales.");
-
-  // Check the confirmation form, show a confirmation message
-  if(
-      firstNameValid 
-      && lastNameValid 
-      && emailValid
-      && birthdateValid 
-      && nbTournamentValid
-      && locationValid
-      && termsValid
-    ) {
-      document.querySelector(".modal-body").style.display = "none";
-      document.querySelector(".Confirmation").style.display = "block";
-    }
+function validation(event) {
+	//event.preventDefault();
+	let isValidInput = true;
+	//removeAlerts();
+	if (!firstValidation()) {
+		isValidInput = false;
+		isNotvalid(firstName, errorMessages.firstError);
+	}
+	if (!lastValidation()) {
+		isValidInput = false;
+		isNotvalid(lastName, errorMessages.lastError);
+	}
+	if (!emailValidation()) {
+		isValidInput = false;
+		isNotvalid(mail, errorMessages.mailError);
+	}
+	if (!birthdateValidation()) {
+		isValidInput = false;
+		isNotvalid(birthdate, errorMessages.birthdateError);
+	}
+	if (!nbTournamentValidation()) {
+		isValidInput = false;
+		isNotvalid(nbTournament, errorMessages.nbTournamentError);
+	}
+	if (!locationValidation()) {
+		isValidInput = false;
+		isNotvalid(location, errorMessages.locationError);
+	}
+	if (!checkboxValidation()) {
+		isValidInput = false;
+		isNotvalid(checkboxInput, errorMessages.checkboxError);
+	}
+	if (isValidInput) {
+		isValid();
+	}
 }
