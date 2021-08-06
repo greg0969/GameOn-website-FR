@@ -64,8 +64,6 @@
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="validation();"
-              novalidate
             >
               <div
                 class="formData">
@@ -128,11 +126,12 @@
               <div
                 class="formData">
                 <label for="quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
-                <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99">
+                <input type="number" class="text-control" id="quantity" name="quantity" min="0" max="99" data-error="" data-error-visible="">
               </div>
               <p class="text-label">Quelles villes ?</p>
               <div
-                class="formData">
+                class="formData" data-error=""
+                data-error-visible="">
                 <input
                   class="checkbox-input"
                   type="radio"
@@ -194,6 +193,7 @@
                   id="location6"
                   name="location"
                   value="Portland"
+                    
                 />
                 <label class="checkbox-label" for="location6">
                   <span class="checkbox-icon"></span>
@@ -202,12 +202,15 @@
               </div>
 
               <div
-                class="formData">
+                class="formData" data-error=""
+                data-error-visible=>
                 <input
                   class="checkbox-input"
                   type="checkbox"
                   id="checkbox1"
                   checked
+                  data-error=""
+                  data-error-visible=""
                 />
                 <label class="checkbox2-label" for="checkbox1" required>
                   <span class="checkbox-icon"></span>
@@ -226,7 +229,7 @@
                 type="submit"
                 class="button"
                 value="C'est parti"
-                
+                onclick="validation();"
               />
             </form>
           </div>
