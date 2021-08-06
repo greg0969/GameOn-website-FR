@@ -36,6 +36,9 @@
             Marathon national<br>
             de jeux vidéos
           </h1>
+          <div class="Confirmation">
+            <p>Merci pour votre participation</p>
+          </div>
           <p class="hero-text">
             Vous aimez jouer ? Notre prochain évènement gaming est ouvert
             aux réservations... Places limitées !
@@ -51,20 +54,18 @@
           je m'inscris
         </button>
       </div>
+      
 
       <div class="bground">
         <div class="content">
           <span class="close" onclick="closeModal()"></span>
           <div class="modal-body">
-            <div class="Confirmation">
-              <p>Merci pour votre participation</p>
-            </div>
-
             <form
               name="reserve"
               action="index.html"
               method="get"
-              onsubmit="return validation(this);"
+              onsubmit="validation();"
+              novalidate
             >
               <div
                 class="formData">
@@ -78,6 +79,7 @@
                   required
                   data-error
                   data-error-visible
+                  
                 /><br>
                 
                 
@@ -224,7 +226,7 @@
                 type="submit"
                 class="button"
                 value="C'est parti"
-                onclick="validation();"
+                
               />
             </form>
           </div>

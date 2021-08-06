@@ -10,6 +10,7 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
+const modalClose = document.querySelector(".close");
 const formData = document.querySelectorAll(".formData");
 const form = document.getElementsByName('reserve');
 const confirmationMsg = document.getElementsByClassName("Confirmation");
@@ -23,9 +24,15 @@ const checkbox = document.getElementById("checkbox1");
 const confirm = document.getElementById("confirm-modal");
 
 // launch modal event
+
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
+// close modal event 
+
+modalClose.addEventListener("click", closeModal);
+
 // launch modal form
+
 function launchModal() {
   modalbg.style.display = "block";
 }
@@ -38,11 +45,14 @@ function closeModal() {
 
 // keep modal
 
-/*form[0].addEventListener('submit', (e) => {
-  e.preventDefault();
-});*/
+function keepModal(form) {
+	form[0].addEventListener('submit', (e) => {
+		e.preventDefault();
+	  });
+}
 
-// error message
+
+// error messages
 
 const errorMessages = {
   lastError: "Veuillez entrer un nom comportant 2 caractères ou plus.",
@@ -54,9 +64,25 @@ const errorMessages = {
 	checkboxError: "Veuillez accepter les conditions d'utilisations.",
 };
 
+// Show the confirmation message
+
 function isValid() {
-  confirmationMsg.style.display = "block";
+	modalbg.style.display = "none";
+  	confirmationMsg.style.display = "flex";
+	
 }
+
+// remove error messages
+
+function removeErrors() {
+	let invalidInput = document.querySelectorAll('formdata[data-error-visible=true]');
+	for (input of invalidInput) {
+		input.setAttribute('data-error-visible', false);
+		input.setAttribute('data-error',"");
+	}
+}
+
+// Show error message 
 
 function isNotvalid(value, message) {
 	var input ;
@@ -65,7 +91,7 @@ function isNotvalid(value, message) {
 	input.setAttribute("data-error", message);
 }
 
-// validation
+// input's validation conditions
 
 function firstValidation() {
 	let inputValue = firstName.value;
@@ -79,8 +105,12 @@ function firstValidation() {
 
 function lastValidation() {
 	let inputValue = lastName.value;
-	if (inputValue !== null && inputValue.length >= 2) return true;
-	else return false;
+	if (inputValue !== null && inputValue.length >= 2){
+		return true;
+	} 
+	else {
+		return false;
+	} 
 }
 
 
@@ -90,7 +120,8 @@ function emailValidation() {
 }
 
 function birthdateValidation() {
-
+	let birthdateRegex = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+	return birthdateRegex.test(birthdate.value);
 }
 
 function nbTournamentValidation() {
@@ -99,8 +130,8 @@ function nbTournamentValidation() {
 }
 
 function locationValidation() {
-	for (let radio of location) {
-		if (radio.checked === true) {
+	for (let radio of locations) {
+		if (radio.checked) {
       return true;
     }
 	}
@@ -108,7 +139,7 @@ function locationValidation() {
 }
 
 function checkboxValidation() {
-  if (checkbox.checked) {
+  if (checkbox.checked = true) {
     return true
   } 
 	else {
@@ -116,11 +147,12 @@ function checkboxValidation() {
   }
 }
 
+// Validation
 
 function validation(event) {
 	//event.preventDefault();
 	let isValidInput = true;
-	//removeAlerts();
+	removeErrors();
 	if (!firstValidation()) {
 		isValidInput = false;
 		isNotvalid(firstName, errorMessages.firstError);
@@ -148,6 +180,9 @@ function validation(event) {
 	if (!checkboxValidation()) {
 		isValidInput = false;
 		isNotvalid(checkboxInput, errorMessages.checkboxError);
+	}
+	if (isValidInput = false) {
+		keepModal(form);
 	}
 	if (isValidInput) {
 		isValid();
