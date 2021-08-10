@@ -20,8 +20,8 @@ const lastName = document.getElementById("last");
 const mail = document.getElementById("email");
 const birthdate = document.getElementById("birthdate");
 const nbTournament = document.getElementById("quantity");
-const locations = document.querySelectorAll(".checkbox-input[type=radio]");
-const checkbox = document.getElementById("checkbox1");
+const locations = document.querySelectorAll("input[type=radio]:checked").length;
+const checkbox = document.querySelectorAll("input[type=checkbox]:checked").length;
 const confirm = document.getElementById("confirm-modal");
 
 // launch modal event
@@ -31,7 +31,6 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // close modal event 
 
 modalClose.addEventListener("click", closeModal);
-modalClose.addEventListener("click",removeErrors);
 
 // launch modal form
 
@@ -66,6 +65,15 @@ const errorMessages = {
 	checkboxError: "Veuillez accepter les conditions d'utilisations.",
 };
 
+// Regex 
+
+const Regex = {
+	 NoNbRegex : /^[0-9]/,
+	 mailRegex : /^\S+@\S+\.\S+$/,
+	 //birthdateRegex : /^([0-9])/,
+	 nbRegex : /^[0-9]+$/,
+};
+
 // Show the confirmation message
 
 function isValid() {
@@ -88,17 +96,16 @@ function removeErrors() {
 // Show error message 
 
 function isNotvalid(value, message) {
-	var input ;
-	input = value.parentNode;
+	let input = value.parentNode;
 	input.setAttribute("data-error-visible", true);
 	input.setAttribute("data-error", message);
-}
+} 
 
 // input's validation conditions
 
 function firstValidation() {
 	let inputValue = firstName.value;
-	if (inputValue !== null && inputValue.length >= 2) {
+	if (inputValue !== null && inputValue.length >= 2 && inputValue !== Regex.NoNbRegex && inputValue.replace(/^\s+|\s+$/gm,'')) {
     return true;
   }
 	else {
@@ -108,7 +115,7 @@ function firstValidation() {
 
 function lastValidation() {
 	let inputValue = lastName.value;
-	if (inputValue !== null && inputValue.length >= 2){
+	if (inputValue !== null && inputValue.length >= 2 && inputValue !== Regex.NoNbRegex && inputValue.replace(/^\s+|\s+$/gm,'')){
 		return true;
 	} 
 	else {
@@ -117,31 +124,41 @@ function lastValidation() {
 }
 
 function emailValidation() {
-	let mailRegex = /^\S+@\S+\.\S+$/;
-	return mailRegex.test(mail.value);
+	let inputValue = mail.value;
+	return Regex.mailRegex.test(mail.value && inputValue.replace(/^\s+|\s+$/gm,''));
 }
 
 function birthdateValidation() {
-	let birthdateRegex = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
-	return birthdateRegex.test(birthdate.value);
+	let birthdateValue = new Date(birthdate.value);
+	let today = new Date();
+	if (birthdateValue.toString() !== "Invalid Date") {
+		if (
+			birthdateValue.getDate() >= today.getDate() &&
+			birthdateValue.getMonth() == today.getMonth() &&
+			birthdateValue.getFullYear() == today.getFullYear()
+		) {
+			return false;
+		} else {
+			return true;
+		}
+	} else {
+		return false;
+	}
 }
 
 function nbTournamentValidation() {
-	let nbRegex = /^[0-9]+$/;
-	return nbRegex.test(nbTournament.value);
+	return Regex.nbRegex.test(nbTournament.value);
 }
 
 function locationValidation() {
-	for (let radio of locations) {
-		if (radio.checked) {
+	if (locations == 1) {
       return true;
-    }
 	}
 	return false;
 }
 
 function checkboxValidation() {
-  if (checkbox.checked = true) {
+  if (checkbox == 1) {
     return true
   } 
 	else {
@@ -149,18 +166,16 @@ function checkboxValidation() {
   }
 }
 
-
-
 // validation event
 
-submitBtn.addEventListener("click",validation());
+submitBtn.addEventListener("click",validation);
 
 // Validation
 
  function validation(event) {
-	//event.preventDefault();
-	let isValidInput = true;
+	event.preventDefault();
 	removeErrors();
+	let isValidInput = true;
 	if (!firstValidation()) {
 		isValidInput = false;
 		isNotvalid(firstName, errorMessages.firstError);
@@ -191,9 +206,9 @@ submitBtn.addEventListener("click",validation());
 	}
 	if (isValidInput = false) {
 		keepModal(form);
-		form[0].addEventListener("onchange",removeErrors(this));
+		
 	}
-	if (isValidInput) {
+	if (isValidInput = true) {
 		isValid();
 	}
 }
