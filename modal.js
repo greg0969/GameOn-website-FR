@@ -10,6 +10,7 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
+const submitBtn = document.getElementById("submit-btn");
 const modalClose = document.querySelector(".close");
 const formData = document.querySelectorAll(".formData");
 const form = document.getElementsByName('reserve');
@@ -30,6 +31,7 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 // close modal event 
 
 modalClose.addEventListener("click", closeModal);
+modalClose.addEventListener("click",removeErrors);
 
 // launch modal form
 
@@ -80,6 +82,7 @@ function removeErrors() {
 		input.setAttribute('data-error-visible', false);
 		input.setAttribute('data-error',"");
 	}
+	
 }
 
 // Show error message 
@@ -112,7 +115,6 @@ function lastValidation() {
 		return false;
 	} 
 }
-
 
 function emailValidation() {
 	let mailRegex = /^\S+@\S+\.\S+$/;
@@ -147,9 +149,15 @@ function checkboxValidation() {
   }
 }
 
+
+
+// validation event
+
+submitBtn.addEventListener("click",validation());
+
 // Validation
 
-function validation(event) {
+ function validation(event) {
 	//event.preventDefault();
 	let isValidInput = true;
 	removeErrors();
@@ -183,6 +191,7 @@ function validation(event) {
 	}
 	if (isValidInput = false) {
 		keepModal(form);
+		form[0].addEventListener("onchange",removeErrors(this));
 	}
 	if (isValidInput) {
 		isValid();
