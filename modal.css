@@ -539,7 +539,7 @@ footer {
   }
 }
 
-.Confirmation {
+#confirmation {
     display: none;
     position: fixed;
     z-index: 2;

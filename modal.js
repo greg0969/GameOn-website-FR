@@ -14,7 +14,7 @@ const submitBtn = document.getElementById("submit-btn");
 const modalClose = document.querySelector(".close");
 const formData = document.querySelectorAll(".formData");
 const form = document.getElementsByName('reserve');
-const confirmationMsg = document.getElementsByClassName("Confirmation");
+const confirmationMsg = document.getElementById("confirmation");
 const firstName = document.getElementById("first");
 const lastName = document.getElementById("last");
 const mail = document.getElementById("email");
@@ -24,6 +24,8 @@ const locations = document.querySelectorAll("input[type=radio]:checked").length;
 const checkbox = document.querySelectorAll("input[type=checkbox]:checked").length;
 const confirm = document.getElementById("confirm-modal");
 
+	//	EVENTS
+
 // launch modal event
 
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -32,16 +34,26 @@ modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
 
 modalClose.addEventListener("click", closeModal);
 
+	//	Display modal
+
 // launch modal form
 
 function launchModal() {
   modalbg.style.display = "block";
 }
 
-// close form
+// close modal form when click on cross
 
 function closeModal() {
   modalbg.style.display = "none";
+ 
+}
+
+// close confirmation msg when click on cross
+
+function closeConfirmationMsg() {
+	confirmationMsg.style.display = "none";
+	
 }
 
 // keep modal
@@ -56,7 +68,7 @@ function keepModal(form) {
 // error messages
 
 const errorMessages = {
-  lastError: "Veuillez entrer un nom comportant 2 caractères ou plus.",
+  	lastError: "Veuillez entrer un nom comportant 2 caractères ou plus.",
 	firstError: "Veuillez entrer un prénom comportant 2 caractères ou plus.",
 	mailError: "Veuillez entrer une adresse email valide.",
 	birthdateError: "Veuillez entrer une date de naissance valide.",
@@ -78,7 +90,7 @@ const Regex = {
 
 function isValid() {
 	modalbg.style.display = "none";
-  	confirmationMsg.style.display = "flex";
+	confirmationMsg.style.display = "flex";
 	
 }
 
@@ -87,18 +99,17 @@ function isValid() {
 function removeErrors() {
 	let invalidInput = document.querySelectorAll('formdata[data-error-visible=true]');
 	for (input of invalidInput) {
-		input.setAttribute('data-error-visible', false);
-		input.setAttribute('data-error',"");
+		input.parentElement.setAttribute('data-error-visible', false);
+		input.parentElement.setAttribute('data-error', "");
 	}
 	
 }
 
-// Show error message 
+// Show error messages 
 
 function isNotvalid(value, message) {
-	let input = value.parentNode;
-	input.setAttribute("data-error-visible", true);
-	input.setAttribute("data-error", message);
+	value.parentNode.setAttribute("data-error-visible", true);
+	value.parentNode.setAttribute("data-error", message);
 } 
 
 // input's validation conditions
@@ -106,10 +117,10 @@ function isNotvalid(value, message) {
 function firstValidation() {
 	let inputValue = firstName.value;
 	if (inputValue !== null && inputValue.length >= 2 && inputValue !== Regex.NoNbRegex && inputValue.replace(/^\s+|\s+$/gm,'')) {
-    return true;
+    	return true;
   }
 	else {
-    return false;
+		return false
   }
 }
 
@@ -119,13 +130,18 @@ function lastValidation() {
 		return true;
 	} 
 	else {
-		return false;
+		return false ;
 	} 
 }
 
 function emailValidation() {
 	let inputValue = mail.value;
-	return Regex.mailRegex.test(mail.value && inputValue.replace(/^\s+|\s+$/gm,''));
+	if (Regex.mailRegex.test(mail.value && inputValue.replace(/^\s+|\s+$/gm,''))) {
+		return true;
+	}
+	else {
+		return false ;
+	}
 }
 
 function birthdateValidation() {
@@ -147,14 +163,22 @@ function birthdateValidation() {
 }
 
 function nbTournamentValidation() {
-	return Regex.nbRegex.test(nbTournament.value);
+	if (Regex.nbRegex.test(nbTournament.value) > 0) {
+		return true;
+	} 
+	else {
+		return false ;
+	}
 }
 
-function locationValidation() {
-	if (locations == 1) {
-      return true;
+/*function locationValidation() {
+	for (location in locations) {
+		if (location == 1) {
+			return true;
+		  }
+		  return false;
 	}
-	return false;
+	
 }
 
 function checkboxValidation() {
@@ -164,7 +188,7 @@ function checkboxValidation() {
 	else {
     return false
   }
-}
+}*/
 
 // validation event
 
@@ -172,43 +196,50 @@ submitBtn.addEventListener("click",validation);
 
 // Validation
 
- function validation(event) {
+ function validation(event) {	
 	event.preventDefault();
 	removeErrors();
-	let isValidInput = true;
-	if (!firstValidation()) {
-		isValidInput = false;
-		isNotvalid(firstName, errorMessages.firstError);
+	let isValidInput = false;
+	if (event) {
+		if (!firstValidation()) {
+			isNotvalid(firstName, errorMessages.firstError);
+		}
+		if (!lastValidation()) {
+			isValidInput = false;
+			isNotvalid(lastName, errorMessages.lastError);
+		}
+		if (!emailValidation()) {
+			isValidInput = false;
+			isNotvalid(mail, errorMessages.mailError);
+		}
+		if (!birthdateValidation()) {
+			isValidInput = false;
+			isNotvalid(birthdate, errorMessages.birthdateError);
+		}
+		if (!nbTournamentValidation()) {
+			isValidInput = false;
+			isNotvalid(nbTournament, errorMessages.nbTournamentError);
+		}
+		/*if (!locationValidation()) {
+			isValidInput = false;
+			isNotvalid(location, errorMessages.locationError);
+		}
+		if (!checkboxValidation()) {
+			isValidInput = false;
+			isNotvalid(checkboxInput, errorMessages.checkboxError);
+		}*/
+		if (isValidInput = false) {
+			keepModal(form);
+			
+		}
 	}
-	if (!lastValidation()) {
-		isValidInput = false;
-		isNotvalid(lastName, errorMessages.lastError);
-	}
-	if (!emailValidation()) {
-		isValidInput = false;
-		isNotvalid(mail, errorMessages.mailError);
-	}
-	if (!birthdateValidation()) {
-		isValidInput = false;
-		isNotvalid(birthdate, errorMessages.birthdateError);
-	}
-	if (!nbTournamentValidation()) {
-		isValidInput = false;
-		isNotvalid(nbTournament, errorMessages.nbTournamentError);
-	}
-	if (!locationValidation()) {
-		isValidInput = false;
-		isNotvalid(location, errorMessages.locationError);
-	}
-	if (!checkboxValidation()) {
-		isValidInput = false;
-		isNotvalid(checkboxInput, errorMessages.checkboxError);
-	}
-	if (isValidInput = false) {
-		keepModal(form);
+	else {
 		
+		if (isValidInput = true) {
+			isValid();
+		}
 	}
-	if (isValidInput = true) {
-		isValid();
-	}
+	
 }
+
+
