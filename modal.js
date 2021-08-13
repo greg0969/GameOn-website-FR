@@ -239,7 +239,7 @@ submitBtn.addEventListener("click",validation);
 		isValidInput = false;
 		isNotvalid(checkbox, errorMessages.checkboxError);
 	}
-	else if (isValidInput = true) {
+	if (isValidInput) {
 		isValid();
 	}
 }
