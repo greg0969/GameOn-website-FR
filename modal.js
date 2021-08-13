@@ -20,8 +20,8 @@ const lastName = document.getElementById("last");
 const mail = document.getElementById("email");
 const birthdate = document.getElementById("birthdate");
 const nbTournament = document.getElementById("quantity");
-const locations = document.querySelectorAll("input[type=radio]:checked").length;
-const checkbox = document.querySelectorAll("input[type=checkbox]:checked").length;
+const locations = document.querySelectorAll("input[type=radio]:checked");
+const checkbox = document.querySelectorAll("input[type=checkbox]");
 const confirm = document.getElementById("confirm-modal");
 
 	//	EVENTS
@@ -58,11 +58,11 @@ function closeConfirmationMsg() {
 
 // keep modal
 
-function keepModal(form) {
+/*function keepModal(form) {
 	form[0].addEventListener('submit', (e) => {
 		e.preventDefault();
 	  });
-}
+}*/
 
 
 // error messages
@@ -97,19 +97,19 @@ function isValid() {
 // remove error messages
 
 function removeErrors() {
-	let invalidInput = document.querySelectorAll('formdata[data-error-visible=true]');
+	let invalidInput = document.querySelectorAll('.formdata[data-error-visible=true]');
 	for (input of invalidInput) {
-		input.parentElement.setAttribute('data-error-visible', false);
-		input.parentElement.setAttribute('data-error', "");
+		invalidInput.setAttribute('data-error-visible', false);
+		invalidInput.setAttribute('data-error', "");
 	}
 	
 }
 
 // Show error messages 
 
-function isNotvalid(value, message) {
-	value.parentNode.setAttribute("data-error-visible", true);
-	value.parentNode.setAttribute("data-error", message);
+function isNotvalid(formData, message) {
+	formData.parentNode.setAttribute("data-error-visible", true);
+	formData.parentNode.setAttribute("data-error", message);
 } 
 
 // input's validation conditions
@@ -171,24 +171,24 @@ function nbTournamentValidation() {
 	}
 }
 
-/*function locationValidation() {
-	for (location in locations) {
-		if (location == 1) {
-			return true;
-		  }
-		  return false;
+function locationValidation() {
+	if (locations.length == null){
+		return false ;
+	}
+	else {
+		return true ;
 	}
 	
 }
 
 function checkboxValidation() {
-  if (checkbox == 1) {
-    return true
+  if (checkbox.lenght == null) {
+    return false ;
   } 
 	else {
-    return false
+    return true ;
   }
-}*/
+}
 
 // validation event
 
@@ -199,6 +199,7 @@ submitBtn.addEventListener("click",validation);
  function validation(event) {	
 	event.preventDefault();
 	let isValidInput = true ;
+	removeErrors();
 	if (!firstValidation()) {
 		isValidInput = false
 		isNotvalid(firstName, errorMessages.firstError);
@@ -219,17 +220,17 @@ submitBtn.addEventListener("click",validation);
 		isValidInput = false;
 		isNotvalid(nbTournament, errorMessages.nbTournamentError);
 	}
-	/*if (!locationValidation()) {
+	if (!locationValidation()) {
 		isValidInput = false;
-		isNotvalid(location, errorMessages.locationError);
+		isNotvalid(locations, errorMessages.locationError);
 	}
 	if (!checkboxValidation()) {
 		isValidInput = false;
-		isNotvalid(checkboxInput, errorMessages.checkboxError);
-	}*/
+		isNotvalid(checkbox, errorMessages.checkboxError);
+	}
 	else if (isValidInput = true) {
 		isValid();
-		removeErrors;
+		
 	}
 }
 
