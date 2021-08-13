@@ -198,48 +198,39 @@ submitBtn.addEventListener("click",validation);
 
  function validation(event) {	
 	event.preventDefault();
-	removeErrors();
-	let isValidInput = false;
-	if (event) {
-		if (!firstValidation()) {
-			isNotvalid(firstName, errorMessages.firstError);
-		}
-		if (!lastValidation()) {
-			isValidInput = false;
-			isNotvalid(lastName, errorMessages.lastError);
-		}
-		if (!emailValidation()) {
-			isValidInput = false;
-			isNotvalid(mail, errorMessages.mailError);
-		}
-		if (!birthdateValidation()) {
-			isValidInput = false;
-			isNotvalid(birthdate, errorMessages.birthdateError);
-		}
-		if (!nbTournamentValidation()) {
-			isValidInput = false;
-			isNotvalid(nbTournament, errorMessages.nbTournamentError);
-		}
-		/*if (!locationValidation()) {
-			isValidInput = false;
-			isNotvalid(location, errorMessages.locationError);
-		}
-		if (!checkboxValidation()) {
-			isValidInput = false;
-			isNotvalid(checkboxInput, errorMessages.checkboxError);
-		}*/
-		if (isValidInput = false) {
-			keepModal(form);
-			
-		}
+	let isValidInput = true ;
+	if (!firstValidation()) {
+		isValidInput = false
+		isNotvalid(firstName, errorMessages.firstError);
 	}
-	else {
-		
-		if (isValidInput = true) {
-			isValid();
-		}
+	if (!lastValidation()) {
+		isValidInput = false;
+		isNotvalid(lastName, errorMessages.lastError);
 	}
-	
+	if (!emailValidation()) {
+		isValidInput = false;
+		isNotvalid(mail, errorMessages.mailError);
+	}
+	if (!birthdateValidation()) {
+		isValidInput = false;
+		isNotvalid(birthdate, errorMessages.birthdateError);
+	}
+	if (!nbTournamentValidation()) {
+		isValidInput = false;
+		isNotvalid(nbTournament, errorMessages.nbTournamentError);
+	}
+	/*if (!locationValidation()) {
+		isValidInput = false;
+		isNotvalid(location, errorMessages.locationError);
+	}
+	if (!checkboxValidation()) {
+		isValidInput = false;
+		isNotvalid(checkboxInput, errorMessages.checkboxError);
+	}*/
+	else if (isValidInput = true) {
+		isValid();
+		removeErrors;
+	}
 }
 
 
