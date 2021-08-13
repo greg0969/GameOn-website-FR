@@ -21,8 +21,9 @@ const mail = document.getElementById("email");
 const birthdate = document.getElementById("birthdate");
 const nbTournament = document.getElementById("quantity");
 const locations = document.querySelectorAll("input[type=radio]:checked");
-const checkbox = document.querySelectorAll("input[type=checkbox]:checked");
+const checkbox = document.getElementById("checkbox1");
 const confirm = document.getElementById("confirm-modal");
+const closeConfirmMsg = document.querySelector(".closeConfirmationMsg");
 
 	//	EVENTS
 
@@ -55,6 +56,8 @@ function closeConfirmationMsg() {
 	confirmationMsg.style.display = "none";
 	
 }
+
+closeConfirmMsg.addEventListener("click", closeConfirmationMsg);
 
 // keep modal
 
@@ -195,12 +198,7 @@ function locationValidation() {
 }
 
 function checkboxValidation() {
-  if (checkbox.length > 0) {
-    return true ;
-  } 
-	else {
-    return false ;
-  }
+  	return checkbox.checked
 }
 
 // validation event
@@ -243,7 +241,6 @@ submitBtn.addEventListener("click",validation);
 	}
 	else if (isValidInput = true) {
 		isValid();
-		
 	}
 }
 

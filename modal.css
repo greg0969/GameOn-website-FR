@@ -556,6 +556,32 @@ footer {
   width: 100%;
 }
 
+.closeConfirmationMsg {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 32px;
+  height: 32px;
+  opacity: 1;
+  cursor: pointer;
+  transform: scale(0.7);
+}
+.closeConfirmationMsg:before,
+.closeConfirmationMsg:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 33px;
+  width: 3px;
+  background-color: #fff;
+}
+.closeConfirmationMsg:before {
+  transform: rotate(45deg);
+}
+.closeConfirmationMsg:after {
+  transform: rotate(-45deg);
+}
+
 input[aria-invalid='true'] {
   border: 2px solid #fe142f;
 }
