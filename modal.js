@@ -97,10 +97,10 @@ function isValid() {
 // remove error messages
 
 function removeErrors() {
-	let invalidInput = document.querySelectorAll('.formdata[data-error-visible=true]');
+	let invalidInput = document.querySelectorAll('.formData[data-error-visible="true"]');
 	for (input of invalidInput) {
-		invalidInput.setAttribute('data-error-visible', false);
-		invalidInput.setAttribute('data-error', "");
+		input.setAttribute('data-error-visible', false);
+		input.setAttribute('data-error', "");
 	}
 	
 }
