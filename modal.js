@@ -21,7 +21,7 @@ const mail = document.getElementById("email");
 const birthdate = document.getElementById("birthdate");
 const nbTournament = document.getElementById("quantity");
 const locations = document.querySelectorAll("input[type=radio]:checked");
-const checkbox = document.querySelectorAll("input[type=checkbox]");
+const checkbox = document.querySelectorAll("input[type=checkbox]:checked");
 const confirm = document.getElementById("confirm-modal");
 
 	//	EVENTS
@@ -107,10 +107,23 @@ function removeErrors() {
 
 // Show error messages 
 
-function isNotvalid(formData, message) {
-	formData.parentNode.setAttribute("data-error-visible", true);
-	formData.parentNode.setAttribute("data-error", message);
+function isNotvalid(input,message) {
+	let target = input.parentNode;
+	target.setAttribute('data-error-visible', true);
+	target.setAttribute('data-error', message);
 } 
+
+/*function isNotvalid(element, message) {
+	let target;
+	if (NodeList.prototype.isPrototypeOf(element))  { 
+		target = element[0].parentElement;
+	}
+	else {
+		target = element.parentNode;
+	}
+	target.setAttribute("data-error-visible", true);
+	target.setAttribute("data-error", message);
+}*/
 
 // input's validation conditions
 
@@ -172,8 +185,8 @@ function nbTournamentValidation() {
 }
 
 function locationValidation() {
-	if (locations.length == null){
-		return false ;
+	if (locations.length > 0){
+		return true ;
 	}
 	else {
 		return true ;
@@ -182,11 +195,11 @@ function locationValidation() {
 }
 
 function checkboxValidation() {
-  if (checkbox.lenght == null) {
-    return false ;
+  if (checkbox.length > 0) {
+    return true ;
   } 
 	else {
-    return true ;
+    return false ;
   }
 }
 
