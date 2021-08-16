@@ -24,6 +24,7 @@ const locations = document.querySelectorAll("input[type=radio]:checked");
 const checkbox = document.getElementById("checkbox1");
 const confirm = document.getElementById("confirm-modal");
 const closeConfirmMsg = document.querySelector(".closeConfirmationMsg");
+const btnConfirmation = document.getElementById("close-btn");
 
 	//	EVENTS
 
@@ -54,10 +55,10 @@ function closeModal() {
 
 function closeConfirmationMsg() {
 	confirmationMsg.style.display = "none";
-	
 }
 
 closeConfirmMsg.addEventListener("click", closeConfirmationMsg);
+btnConfirmation.addEventListener("click",closeConfirmationMsg);
 
 // keep modal
 
@@ -116,17 +117,6 @@ function isNotvalid(input,message) {
 	target.setAttribute('data-error', message);
 } 
 
-/*function isNotvalid(element, message) {
-	let target;
-	if (NodeList.prototype.isPrototypeOf(element))  { 
-		target = element[0].parentElement;
-	}
-	else {
-		target = element.parentNode;
-	}
-	target.setAttribute("data-error-visible", true);
-	target.setAttribute("data-error", message);
-}*/
 
 // input's validation conditions
 
