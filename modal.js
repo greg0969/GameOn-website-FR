@@ -25,6 +25,7 @@ const checkbox = document.getElementById("checkbox1");
 const confirm = document.getElementById("confirm-modal");
 const closeConfirmMsg = document.querySelector(".closeConfirmationMsg");
 const btnConfirmation = document.getElementById("close-btn");
+const content = document.querySelector(".content");
 
 	//	EVENTS
 
@@ -48,13 +49,12 @@ function launchModal() {
 
 function closeModal() {
   modalbg.style.display = "none";
- 
 }
 
 // close confirmation msg when click on cross
 
 function closeConfirmationMsg() {
-	confirmationMsg.style.display = "none";
+	modalbg.style.display = "none";
 }
 
 closeConfirmMsg.addEventListener("click", closeConfirmationMsg);
@@ -84,7 +84,7 @@ const Regex = {
 // Show the confirmation message
 
 function isValid() {
-	modalbg.style.display = "none";
+	content.style.display = "none";
 	confirmationMsg.style.display = "flex";
 	
 }
@@ -112,8 +112,8 @@ function isNotvalid(input,message) {
 // input's validation conditions
 
 function firstValidation() {
-	let inputValue = firstName.value;
-	if (inputValue !== null && inputValue.length >= 2 && inputValue !== Regex.NoNbRegex && inputValue.replace(/^\s+|\s+$/gm,'')) {
+	let inputValue = firstName.value.trim();
+	if (inputValue !== null && inputValue.length >= 2 && inputValue !== Regex.NoNbRegex ) {
     	return true;
   }
 	else {
@@ -122,8 +122,8 @@ function firstValidation() {
 }
 
 function lastValidation() {
-	let inputValue = lastName.value;
-	if (inputValue !== null && inputValue.length >= 2 && inputValue !== Regex.NoNbRegex && inputValue.replace(/^\s+|\s+$/gm,'')){
+	let inputValue = lastName.value.trim();
+	if (inputValue !== null && inputValue.length >= 2 && inputValue !== Regex.NoNbRegex){
 		return true;
 	} 
 	else {
@@ -132,8 +132,8 @@ function lastValidation() {
 }
 
 function emailValidation() {
-	let inputValue = mail.value;
-	if (Regex.mailRegex.test(mail.value && inputValue.replace(/^\s+|\s+$/gm,''))) {
+	let inputValue = mail.value.trim();
+	if (Regex.mailRegex.test(inputValue)) {
 		return true;
 	}
 	else {
