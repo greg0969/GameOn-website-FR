@@ -60,15 +60,6 @@ function closeConfirmationMsg() {
 closeConfirmMsg.addEventListener("click", closeConfirmationMsg);
 btnConfirmation.addEventListener("click",closeConfirmationMsg);
 
-// keep modal
-
-/*function keepModal(form) {
-	form[0].addEventListener('submit', (e) => {
-		e.preventDefault();
-	  });
-}*/
-
-
 // error messages
 
 const errorMessages = {
@@ -178,7 +169,7 @@ function nbTournamentValidation() {
 }
 
 function locationValidation() {
-	const locationList = document.querySelectorAll("input[type=radio]:checked");
+	const locationList = document.querySelectorAll("input[type=radio]:checked"); // On récupère tout les boutons radio cochés
 	if (locationList.length > 0){
 		return true ;
 	}
