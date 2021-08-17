@@ -20,7 +20,6 @@ const lastName = document.getElementById("last");
 const mail = document.getElementById("email");
 const birthdate = document.getElementById("birthdate");
 const nbTournament = document.getElementById("quantity");
-const locations = document.querySelectorAll("input[type=radio]:checked");
 const location1 = document.getElementById("location1");
 const checkbox = document.getElementById("checkbox1");
 const confirm = document.getElementById("confirm-modal");
@@ -179,7 +178,8 @@ function nbTournamentValidation() {
 }
 
 function locationValidation() {
-	if (locations.length > 0){
+	const locationList = document.querySelectorAll("input[type=radio]:checked");
+	if (locationList.length > 0){
 		return true ;
 	}
 	else {
