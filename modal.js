@@ -182,7 +182,7 @@ function locationValidation() {
 		return true ;
 	}
 	else {
-		return true ;
+		return false ;
 	}
 	
 }
