@@ -86,7 +86,9 @@ const Regex = {
 function isValid() {
 	content.style.display = "none";
 	confirmationMsg.style.display = "flex";
-	
+	if (confirmationMsg.style.display = "flex") {
+		modalbg.style.backgroundColor = "unset";
+	}
 }
 
 // remove error messages
