@@ -572,10 +572,8 @@ footer {
 
 @media screen and (max-width: 800px) {
   #confirmation {
-    margin: 10px -28px;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    padding: 40px;
   }
   #confirmation p {
     margin-top: 9em;
