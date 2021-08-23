@@ -549,7 +549,7 @@ footer {
       position: relative;
       padding: 1.5em 8%;
       flex-direction: column;
-      margin: 25% auto;
+      margin: 10% auto;
       width: 100%;
       max-width: 500px;
       animation-name: modalopen;
@@ -568,7 +568,7 @@ footer {
 
 #confirmation .btn-signup {
   margin-top: 11em;
-  width: 50%;
+  width: 60%;
   align-self: center;
 }
 
@@ -576,6 +576,7 @@ footer {
   #confirmation {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    margin: 25% auto;
   }
 }
 
